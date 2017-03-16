@@ -9,7 +9,7 @@ in a pre-trained convolutional neural network (convnet).
 vgg_path = '../data/vgg16_weights.h5'
 
 
-def VGG_16(weights_path):
+def VGG_16(weights_path=None):
 """
 Define the VGG16 neural net architecture and 
 load the weights into it from the h5 file downloaded earlier.
@@ -50,6 +50,7 @@ load the weights into it from the h5 file downloaded earlier.
     model.add(Dense(4096, activation='relu'))
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='relu'))
+
     # Load the vgg-16 weights file
     f = h5py.File(weights_path)
     # Assigning appropriate weights from the vgg-16 file
@@ -61,6 +62,7 @@ load the weights into it from the h5 file downloaded earlier.
         weights = [g['param_{}'.format(p)] for p in range(g.attrs['nb_params'])]
         model.layers[k].set_weights(weights)
     print("finished loading VGGNet")
+
     return model
 
 
