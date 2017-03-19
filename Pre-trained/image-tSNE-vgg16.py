@@ -89,3 +89,24 @@ load the weights into it from the h5 file downloaded earlier.
 model = VGG_16(vgg_path)
 sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(optimizer=sgd, loss='categorical_crossentropy')
+
+
+
+# We will load all the paths to our images into an array images,
+# recursively from image_path.
+images = [os.path.join(dp, f) for dp, dn, filenames in os.walk(images_path) \
+         for f in filenames if os.path.splitext(f)[1].lower() \
+         in ['.jpg','.png','.jpeg']]
+
+# If num_images < the number of images you have,
+# it will filter out a random subsample of num_images images.
+if num_images < len(images):
+    images = [images[i] for i in sorted(random.sample(xrange(len(images)), num_images))]
+
+print("keeping %d images to analyze" % len(images))
+
+
+
+
+
+
