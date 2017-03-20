@@ -91,7 +91,6 @@ sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(optimizer=sgd, loss='categorical_crossentropy')
 
 
-
 # We will load all the paths to our images into an array images,
 # recursively from image_path.
 images = [os.path.join(dp, f) for dp, dn, filenames in os.walk(images_path) \
@@ -106,7 +105,19 @@ if num_images < len(images):
 print("keeping %d images to analyze" % len(images))
 
 
+# Now we will go through every image, and extract its activations. 
+# The activations we are interested in are those in the last 
+# fully-connected layer of a convnet that we forward pass the image through.
 
+# Each set of activations is a 4096-element list which provides 
+# a high-level characterization of that image. Some of the elements 
+# may be interpretable, corresponding to real-world objects,
+# while others are more abstract. Let's plot it.
 
-
-
+activations = []
+for idx,image_path in enumerate(images):
+    if idx%100==0:
+        print "getting activations for %d/%d %s" % (idx+1, len(images), image_path)
+    image = get_image(image_path);
+    acts = model.predict(image)[0]
+    activations.append(acts)
