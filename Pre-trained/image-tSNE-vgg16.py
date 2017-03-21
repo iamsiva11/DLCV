@@ -121,3 +121,18 @@ for idx,image_path in enumerate(images):
     image = get_image(image_path);
     acts = model.predict(image)[0]
     activations.append(acts)
+
+""" It is usually a good idea to first run the vectors through a faster dimensionality 
+reduction technique like principal component analysis before using t-SNE, 
+to project the 4096-bit activation vectors to a smaller size, say 300 dimensions.
+Then run t-SNE over the resulting 300-dimensional vectors to get our final 2-d embedding """
+
+# First run our activations through PCA to get the activations down to 300 dimensions
+activations = np.array(activations)
+pca = PCA(n_components=300)
+pca.fit(activations)
+pca_activations = pca.transform(activations)
+
+# Then run the PCA-projected activations through t-SNE to get our final embedding
+X = np.array(pca_activations)
+tsne = TSNE(n_components=2, learning_rate=150, perplexity=30, verbose=2, angle=0.2).fit_transform(X)
