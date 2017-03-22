@@ -135,4 +135,8 @@ pca_activations = pca.transform(activations)
 
 # Then run the PCA-projected activations through t-SNE to get our final embedding
 X = np.array(pca_activations)
-tsne = TSNE(n_components=2, learning_rate=150, perplexity=30, verbose=2, angle=0.2).fit_transform(X)
+tsne = TSNE(n_components=2, 
+            learning_rate=150, 
+            perplexity=30, 
+            verbose=2, 
+            angle=0.2).fit_transform(X)
