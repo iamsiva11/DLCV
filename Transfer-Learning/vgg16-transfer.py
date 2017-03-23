@@ -56,14 +56,16 @@ def vgg16_model():
 
 model = vgg16_model()
 
+# Load weigts from file
 model.load_weights('vgg16_weights.h5')
 
+# Remove the last 2 layers 
 for l in model.layers[:-2]:
    l.trainable = False
+model.layers.pop()
+model.layers.pop()
 
-model.layers.pop()
-model.layers.pop()
 model.add(Dropout(0.5))
 model.add(Dense(1, activation='softmax'))
 
-model.compile(optimizer=Adam() loss='categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer = Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
