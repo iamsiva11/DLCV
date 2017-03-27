@@ -13,9 +13,15 @@ from PIL import Image
 # https://drive.google.com/file/d/0Bz7KyqmuGsilT0J5dmRCM0ROVHc/view
 vgg_path = '../data/vgg16_weights.h5'
 
-def get_image(path):
+def get_image(path, isurlpath=False):
 	"""convert the image to a numpy array of the correct size for further processing."""
-	img = Image.open(path)
+	if isurlpath:
+        fd = urllib.urlopen(image_url)
+        image_file = io.BytesIO(fd.read())
+        img = Image.open(image_file)
+    else:
+        img = Image.open(path)
+
 	if img.mode != 'RGB':
         img = img.convert('RGB')
     img = img.resize((224, 224), Image.ANTIALIAS)  # resize the image to fit into VGG-16
@@ -140,3 +146,10 @@ tsne = TSNE(n_components=2,
             perplexity=30, 
             verbose=2, 
             angle=0.2).fit_transform(X)
+
+
+
+
+
+
+
