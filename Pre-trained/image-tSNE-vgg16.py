@@ -148,8 +148,28 @@ tsne = TSNE(n_components=2,
             angle=0.2).fit_transform(X)
 
 
+# Now let's also normalize the t-SNE so all values are between 0 and 1.
+# normalize t-sne points to {0,1}
+tx, ty = tsne[:,0], tsne[:,1]
+tx = (tx-np.min(tx)) / (np.max(tx) - np.min(tx))
+ty = (ty-np.min(ty)) / (np.max(ty) - np.min(ty))
 
+# Finally, we will compose a new RGB image where the set of images 
+# have been drawn according to the t-SNE results.
 
+width = 3000
+height = 3000
+max_dim = 100
 
+full_image = Image.new('RGB', (width, height))
+for img, x, y in zip(images, tx, ty):
+    tile = Image.open(img)
+    rs = max(1, tile.width/max_dim, tile.height/max_dim)
+    tile = tile.resize((tile.width/rs, tile.height/rs), Image.ANTIALIAS)
+    full_image.paste(tile, (int((width-max_dim)*x), int((height-max_dim)*y)))
 
+matplotlib.pyplot.figure(figsize = (12,12))
+imshow(full_image)
 
+#You can save the t-SNE image to disk.
+full_image.save("myTSNE.png")
