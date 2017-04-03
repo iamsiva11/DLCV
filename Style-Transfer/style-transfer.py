@@ -35,7 +35,7 @@ def deprocess_image(x):
 model = vgg16.VGG16(weights='imagenet', include_top=False)
 print('Model loaded.')
 
-model.summary()
+#model.summary()
 
 # this is the placeholder for the input images
 input_img = model.input
@@ -50,8 +50,8 @@ def normalize(x):
 
 
 kept_filters = []
-for filter_index in range(0, 20):
-#for filter_index in range(0, 200):
+#for filter_index in range(0, 20):
+for filter_index in range(0, 200):
     # we only scan through the first 200 filters,
     # but there are actually 512 of them
     print('Processing filter %d' % filter_index)
