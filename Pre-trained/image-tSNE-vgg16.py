@@ -11,7 +11,16 @@ from PIL import Image
 
 # vgg-16 Weights file (~550MB)
 # https://drive.google.com/file/d/0Bz7KyqmuGsilT0J5dmRCM0ROVHc/view
+
+""" Alternate weights file(in case of issue with he first)
+Vggnet weights issue - functional code
+ERROR: You are trying to load a weight file containing 37 layers into a model with 38 layers.
+http://files.heuritech.com/weights/vgg16_weights.h5
+"""
+
+
 vgg_path = '../data/vgg16_weights.h5'
+
 
 def get_image_by_url(path):
     fd = urllib.urlopen(image_url)
