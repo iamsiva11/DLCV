@@ -1,3 +1,7 @@
+from scipy import ndimage
+from keras.preprocessing.image import load_img, img_to_array
+import numpy as np
+
 def img_Preprocess(imDir):
 	imgs = os.listdir(imDir)
 	num = len(imgs)
@@ -12,3 +16,9 @@ def img_Preprocess(imDir):
 	    img = img_to_array(img)
 	    img_list.append(img)     
 	    return img_list
+
+def preprocess_image_new(image_path):
+    img = ndimage.imread(image_path)
+    img = imresize(img, target_size) 
+    img = img.transpose((2,0,1))    
+    return img	    
