@@ -44,6 +44,10 @@ def create_dataset(imdir_class):
         img_list.append(x)        
     return img_list
 
+
+def show_image(i):
+	plt.imshow(x_train[i].transpose(2, 1, 0))
+
 if __name__ == "__main__":
 	imDir_adidas ="path/data/"        
 	x_train = create_dataset(imDir_adidas)
